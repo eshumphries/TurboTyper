@@ -17,13 +17,28 @@
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,30">
             <Button x:Name="AButton" Width="60" Height="60" Margin="30">
-                
+                <Button.Content>
+                    <Canvas Width="60" Height="60">
+                        <TextBlock Text="4" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
+                        <TextBlock Text="Play" Canvas.Left="0" Canvas.Top="45"/>
+                    </Canvas>
+                </Button.Content>
             </Button>
             <Button x:Name="SButton" Width="60" Height="60" Margin="30">
-                
+                <Button.Content>
+                    <Canvas Width="60" Height="60">
+                        <TextBlock Text="s" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
+                        <TextBlock Text="Help" Canvas.Left="0" Canvas.Top="45"/>
+                    </Canvas>
+                </Button.Content>
             </Button>
             <Button x:Name="DButton" Width="60" Height="60" Margin="30">
-                
+                <Button.Content>
+                    <Canvas Width="60" Height="60">
+                        <TextBlock Text="¼" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
+                        <TextBlock Text="Options" Canvas.Left="0" Canvas.Top="45"/>
+                    </Canvas>
+                </Button.Content>
             </Button>
         </StackPanel>
     </Grid>
