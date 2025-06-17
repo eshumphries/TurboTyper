@@ -14,6 +14,24 @@ namespace TurboTyper
         {
             InitializeComponent();
             DisplayScrollViewer.SizeChanged += DisplayScrollViewer_SizeChanged;
+            AButton.Click += AButton_Click;
+            SButton.Click += SButton_Click;
+            DButton.Click += DButton_Click;
+        }
+
+        private void AButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void DButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void DisplayScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
