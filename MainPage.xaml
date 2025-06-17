@@ -6,40 +6,45 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Center" Grid.Row="0">
-            <TextBlock x:Name="DisplayText" Text="Turbo Typer" FontSize="45" FontStyle="Italic" FontWeight="Bold" Margin="0,30,0,0"/>
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,30">
-            <Button x:Name="AButton" Width="60" Height="60" Margin="30">
-                <Button.Content>
-                    <Canvas Width="60" Height="60">
-                        <TextBlock Text="4" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
-                        <TextBlock Text="Play" Canvas.Left="0" Canvas.Top="45"/>
-                    </Canvas>
-                </Button.Content>
-            </Button>
-            <Button x:Name="SButton" Width="60" Height="60" Margin="30">
-                <Button.Content>
-                    <Canvas Width="60" Height="60">
-                        <TextBlock Text="s" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
-                        <TextBlock Text="Help" Canvas.Left="0" Canvas.Top="45"/>
-                    </Canvas>
-                </Button.Content>
-            </Button>
-            <Button x:Name="DButton" Width="60" Height="60" Margin="30">
-                <Button.Content>
-                    <Canvas Width="60" Height="60">
-                        <TextBlock Text="¼" FontFamily="Webdings" FontSize="30" Canvas.Top="15" Canvas.Left="12"/>
-                        <TextBlock Text="Options" Canvas.Left="0" Canvas.Top="45"/>
-                    </Canvas>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-    </Grid>
+    <ScrollViewer x:Name="DisplayScrollViewer" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+        <Grid x:Name="DisplayGrid" HorizontalAlignment="Stretch" Width="300" Height="300" RenderTransformOrigin="0.5,0.5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="TextPanel" HorizontalAlignment="Center" Grid.Row="0">
+                <TextBlock Text="Turbo Typer" FontSize="30" FontStyle="Italic" FontWeight="Bold"/>
+            </StackPanel>
+            <ScrollViewer Width="150" Height="150" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" Grid.Row="1">
+                <TextBlock x:Name="DisplayText"/>
+            </ScrollViewer>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
+                <Button x:Name="AButton" Width="30" Height="30" Margin="30">
+                    <Button.Content>
+                        <Canvas Width="30" Height="30">
+                            <TextBlock Text="4" FontFamily="Webdings" FontSize="15" Canvas.Top="6" Canvas.Left="9"/>
+                            <TextBlock Text="Play" FontSize="9" Canvas.Left="0" Canvas.Top="21"/>
+                        </Canvas>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="SButton" Width="30" Height="30" Margin="30">
+                    <Button.Content>
+                        <Canvas Width="30" Height="30">
+                            <TextBlock Text="s" FontFamily="Webdings" FontSize="15" Canvas.Top="6" Canvas.Left="9"/>
+                            <TextBlock Text="Help" FontSize="9" Canvas.Left="0" Canvas.Top="21"/>
+                        </Canvas>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="DButton" Width="30" Height="30" Margin="30">
+                    <Button.Content>
+                        <Canvas Width="30" Height="30">
+                            <TextBlock Text="¼" FontFamily="Webdings" FontSize="15" Canvas.Top="6" Canvas.Left="9"/>
+                            <TextBlock Text="Options" FontSize="9" Canvas.Left="0" Canvas.Top="21"/>
+                        </Canvas>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>
