@@ -21,7 +21,7 @@ namespace TurboTyper
             double scale = Math.Min(e.NewSize.Width / 800, e.NewSize.Height / 600);
             DisplayGrid.RenderTransform = new ScaleTransform
             {
-                ScaleX = scale * 1.8, 
+                ScaleX = scale * 1.8,
                 ScaleY = scale * 1.8
             };
         }
