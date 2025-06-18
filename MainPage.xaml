@@ -16,9 +16,9 @@
             <StackPanel x:Name="TextPanel" HorizontalAlignment="Center" Grid.Row="0">
                 <TextBlock Text="Turbo Typer" FontSize="30" FontStyle="Italic" FontWeight="Bold"/>
             </StackPanel>
-            <ScrollViewer Width="150" Height="150" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" Grid.Row="1">
-                <TextBlock x:Name="DisplayText"/>
-            </ScrollViewer>
+            <Canvas x:Name="DisplayCanvas" Width="150" Height="150" Grid.Row="1">
+                <TextBlock x:Name="DisplayText" Canvas.Left="-24" Canvas.Top="30"/>
+            </Canvas>
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
                 <Button x:Name="AButton" Width="30" Height="30" Margin="30">
                     <Button.Content>
