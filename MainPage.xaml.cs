@@ -10,6 +10,9 @@ namespace TurboTyper
 {
     public partial class MainPage : Page
     {
+        private DispatcherTimer Timer;
+        private int seconds;
+
         public MainPage()
         {
             InitializeComponent();
@@ -19,9 +22,27 @@ namespace TurboTyper
             DButton.Click += DButton_Click;
         }
 
+        private void StartTimer()
+        {
+            seconds = 18;
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            seconds--;
+            TimerText.Text = $"{seconds}";
+        }
+
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
-
+            EmoteText.Opacity = 100;
+            TimerText.Opacity = 100;
+            Canvas.SetTop(DisplayText, 60);
+            StartTimer();
         }
 
         private void SButton_Click(object sender, RoutedEventArgs e)
