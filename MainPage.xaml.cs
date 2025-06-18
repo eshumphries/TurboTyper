@@ -26,6 +26,7 @@ namespace TurboTyper
 
         private void SButton_Click(object sender, RoutedEventArgs e)
         {
+            Canvas.SetTop(DisplayText, 30);
             DisplayText.Text = "Just type the sentences that appear on the\nscreen in the textbox.  Type fast, because\nthere's a time limit.  Type the sentences on\ntime to go to the next level.  The next level\nwill increase in difficulty.  Finish all 6 levels to\nwin the game.";
         }
 
