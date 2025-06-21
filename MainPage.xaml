@@ -6,21 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <!--This will contain all the elements in the app and can zoom them according to web page size-->
     <ScrollViewer x:Name="DisplayScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+        <!--Organize the elements with this so they line up properly in the UI-->
         <Grid x:Name="DisplayGrid" Width="300" Height="300" RenderTransformOrigin="0.5,0.5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <!--Horizontally center and display the title text-->
             <StackPanel x:Name="TextPanel" HorizontalAlignment="Center" Grid.Row="0">
                 <TextBlock Text="Turbo Typer" FontSize="30" FontStyle="Italic" FontWeight="Bold"/>
             </StackPanel>
+            <!--Use a Canvas for finer control of element placement-->
             <Canvas x:Name="DisplayCanvas" Width="150" Height="150" Grid.Row="1">
+                <!--Emoticon, timer, and sentence text in that order-->
                 <TextBlock x:Name="EmoteText" Text="^_^" FontSize="15" FontWeight="Bold" Canvas.Left="60" Canvas.Top="21" Opacity="0"/>
                 <TextBlock x:Name="TimerText" Text="18" FontSize="15" Canvas.Left="63" Canvas.Top="45" Opacity="0"/>
                 <TextBlock x:Name="DisplayText" Canvas.Left="-24" Canvas.Top="60"/>
             </Canvas>
+            <!--Horizontally center the UI buttons with their descriptions-->
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
                 <Button x:Name="AButton" Width="30" Height="30" Margin="30">
                     <Button.Content>
