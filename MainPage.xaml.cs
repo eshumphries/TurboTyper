@@ -133,7 +133,7 @@ namespace TurboTyper
         // 5. The 6th and final level's coming up! Are you sure you're ready?
         // 6. You asked for it! This level's difficulty is crazier, longer, and harder than the others. Is it beatable?
 
-        // Here's the emoticons used according to the timer:
+        // Here's the emoticons used for each timer number:
         // 18. '_'
         // 10. -_-
         // 5. ;_;
