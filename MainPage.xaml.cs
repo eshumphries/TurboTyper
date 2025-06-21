@@ -59,6 +59,14 @@ namespace TurboTyper
 
         private void Timer_Tick(object sender, object e)
         {
+            // Checking if the sentence typed is the sentence displayed
+            if (InputText.Text == DisplayText.Text)
+            {
+                // Display a congratulation message and emoticon face and stop the timer
+                EmoteText.Text = "^_^";
+                DisplayText.Text = "Good job!";
+                Timer.Stop();
+            }
             // Checking the timer and change the emoticon according to the time
             switch (seconds)
             {
@@ -92,9 +100,10 @@ namespace TurboTyper
             SButton.Opacity = 0;
             DButton.IsEnabled = false;
             DButton.Opacity = 0;
-            // Display the timer and emoticon face
+            // Display the timer, emoticon face, and input text box
             EmoteText.Opacity = 100;
             TimerText.Opacity = 100;
+            InputText.Opacity = 100;
             // Move the sentence text down a bit for better spacing below the timer and emoticon
             Canvas.SetTop(DisplayText, 60);
             // Start the timer
