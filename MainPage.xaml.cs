@@ -13,12 +13,30 @@ namespace TurboTyper
         // Create timer and total seconds
         private DispatcherTimer Timer;
         private int seconds;
+        // Create the sentences to be used for each numbered level, with 6 total levels
+        public class SentenceStorer
+        {
+            public string sentence1 { get; set; }
+            public string sentence2 { get; set; }
+            public string sentence3 { get; set; }
+            public string sentence4 { get; set; }
+            public string sentence5 { get; set; }
+            public string sentence6 { get; set; }
+        }
 
         public MainPage()
         {
             InitializeComponent();
             // Create event to shrink or expand elements according to page size
             DisplayScrollViewer.SizeChanged += DisplayScrollViewer_SizeChanged;
+            // Store the sentences to be used in the game
+            SentenceStorer Sentences = new SentenceStorer();
+            Sentences.sentence1 = "Just type this.";
+            Sentences.sentence2 = "How fast can you type?";
+            Sentences.sentence3 = "Excellent job so far, but it gets trickier!";
+            Sentences.sentence4 = "You've passed Level 1, 2, and 3. Very good.";
+            Sentences.sentence5 = "The 6th and final level's coming up! Are you sure you're ready?";
+            Sentences.sentence6 = "You asked for it! This level's difficulty is crazier, harder, and longer than the others. Is it beatable?";
             // Create events for the buttons in the UI
             AButton.Click += AButton_Click;
             SButton.Click += SButton_Click;
@@ -27,6 +45,8 @@ namespace TurboTyper
 
         private void StartTimer()
         {
+            // Set the emoticon to default face
+            EmoteText.Text = "'_'";
             // Start seconds at 18 to count down
             seconds = 18;
             // Construct new DispatcherTimer and set its interval
@@ -39,6 +59,25 @@ namespace TurboTyper
 
         private void Timer_Tick(object sender, object e)
         {
+            // Checking the timer and change the emoticon according to the time
+            switch (seconds)
+            {
+                // Check if time's up 
+                case 0:
+                    // Stop the timer, enable the AButton, and change the emoticon to a death face
+                    EmoteText.Text = "X_X";
+                    AButton.IsEnabled = true;
+                    Timer.Stop();
+                    break;
+                case 5:
+                    // Change the emoticon to crying face
+                    EmoteText.Text = ";_;";
+                    break;
+                case 10:
+                    // Change the emoticon to a disappointed face
+                    EmoteText.Text = "-_-";
+                    break;
+            }
             // Make the timer a countdown timer and display it in the UI
             seconds--;
             TimerText.Text = $"{seconds}";
@@ -46,6 +85,8 @@ namespace TurboTyper
 
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
+            // Disable this button until either the full sentence is typed or the timer runs out
+            AButton.IsEnabled = false;
             // Make other buttons except this one go away
             SButton.IsEnabled = false;
             SButton.Opacity = 0;
@@ -84,12 +125,21 @@ namespace TurboTyper
             };
         }
 
-        // Here's the sentences to type in the game:
+        // Here's the game levels used and the sentences for each level to type in the game:
         // 1. Just type this.
         // 2. How fast can you type?
         // 3. Excellent job so far, but it gets trickier!
         // 4. You've passed Level 1, 2, and 3. Very good.
         // 5. The 6th and final level's coming up! Are you sure you're ready?
         // 6. You asked for it! This level's difficulty is crazier, longer, and harder than the others. Is it beatable?
+
+        // Here's the emoticons used according to the timer:
+        // 18. '_'
+        // 10. -_-
+        // 5. ;_;
+        // 0. X_X
+
+        // Here's the emoticon used when you beat the level:
+        // ^_^
     }
 }
