@@ -62,9 +62,10 @@ namespace TurboTyper
                 EmoteText.Text = "^_^";
                 DisplayText.Text = "Good job!";
                 Timer.Stop();
-                // Enable the AButton and make it fully opaque
+                // Enable the AButton, make it fully opaque, and give it focus
                 AButton.IsEnabled = true;
                 AButton.Opacity = 1;
+                AButton.Focus();
                 // Increase level number
                 level++;
             }
@@ -78,9 +79,10 @@ namespace TurboTyper
                     DisplayText.Text = "Game over! Try again?";
                     // Stop the timer
                     Timer.Stop();
-                    // Enable the AButton and make it opaque again
+                    // Enable the AButton, make it opaque again, and focus on it
                     AButton.IsEnabled = true;
                     AButton.Opacity = 1;
+                    AButton.Focus();
                     // Reset the level to start over from the beginning
                     level = 0;
                     break;
@@ -111,6 +113,9 @@ namespace TurboTyper
             EmoteText.Opacity = 1;
             TimerText.Opacity = 1;
             InputText.Opacity = 1;
+            // Clear the text input box for the next level after completing the previous and focus on it
+            InputText.Text = "";
+            InputText.Focus();
             // Move the sentence text down a bit for better spacing below the timer and emoticon
             Canvas.SetTop(DisplayText, 60);
             // Store the sentences to be used in the game
@@ -176,22 +181,5 @@ namespace TurboTyper
                 ScaleY = scale * 1.8
             };
         }
-
-        // Here's the game levels used and the sentences for each level to type in the game:
-        // 1. Just type this.
-        // 2. How fast can you type?
-        // 3. Excellent job so far, but it gets trickier!
-        // 4. You've passed Level 1, 2, and 3. Very good.
-        // 5. The 6th and final level's coming up! Are you sure you're ready?
-        // 6. You asked for it! This level's difficulty is crazier, longer, and harder than the others. Is it beatable?
-
-        // Here's the emoticons used for each timer number:
-        // 18. '_'
-        // 10. -_-
-        // 5. ;_;
-        // 0. X_X
-
-        // Here's the emoticon used when you beat the level:
-        // ^_^
     }
 }
