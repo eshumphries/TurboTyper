@@ -62,6 +62,9 @@ namespace TurboTyper
                 EmoteText.Text = "^_^";
                 DisplayText.Text = "Good job!";
                 Timer.Stop();
+                // Enable the AButton and make it fully opaque
+                AButton.IsEnabled = true;
+                AButton.Opacity = 1;
                 // Increase level number
                 level++;
             }
@@ -70,10 +73,16 @@ namespace TurboTyper
             {
                 // Check if time's up 
                 case 0:
-                    // Stop the timer, enable the AButton, and change the emoticon to a death face
+                    // Change the emoticon to a death face and display a game over and try again message
                     EmoteText.Text = "X_X";
-                    AButton.IsEnabled = true;
+                    DisplayText.Text = "Game over! Try again?";
+                    // Stop the timer
                     Timer.Stop();
+                    // Enable the AButton and make it opaque again
+                    AButton.IsEnabled = true;
+                    AButton.Opacity = 1;
+                    // Reset the level to start over from the beginning
+                    level = 0;
                     break;
                 case 5:
                     // Change the emoticon to crying face
@@ -99,9 +108,9 @@ namespace TurboTyper
             DButton.IsEnabled = false;
             DButton.Opacity = 0;
             // Display the timer, emoticon face, and input text box
-            EmoteText.Opacity = 100;
-            TimerText.Opacity = 100;
-            InputText.Opacity = 100;
+            EmoteText.Opacity = 1;
+            TimerText.Opacity = 1;
+            InputText.Opacity = 1;
             // Move the sentence text down a bit for better spacing below the timer and emoticon
             Canvas.SetTop(DisplayText, 60);
             // Store the sentences to be used in the game
