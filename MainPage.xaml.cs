@@ -35,6 +35,8 @@ namespace TurboTyper
             AButton.Click += AButton_Click;
             SButton.Click += SButton_Click;
             DButton.Click += DButton_Click;
+            // Set starting level
+            level = 1;
         }
 
         private void StartTimer()
@@ -122,36 +124,30 @@ namespace TurboTyper
             SentenceStorer Sentences = new SentenceStorer();
             Sentences.sentence1 = "Just type this.";
             Sentences.sentence2 = "How fast can you type?";
-            Sentences.sentence3 = "Excellent job so far, but it gets trickier!";
-            Sentences.sentence4 = "You've passed Level 1, 2, and 3. Very good.";
-            Sentences.sentence5 = "The 6th and final level's coming up! Are you sure you're ready?";
-            Sentences.sentence6 = "You asked for it! This level's difficulty is crazier, harder, and longer than the others. Is it beatable?";
+            Sentences.sentence3 = "Excellent job so far, but it gets\ntrickier!";
+            Sentences.sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
+            Sentences.sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
+            Sentences.sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
             // Set level based on current level
             switch (level)
             {
                 case 1:
-                    level = 2;
-                    DisplayText.Text = Sentences.sentence2;
+                    DisplayText.Text = Sentences.sentence1;
                     break;
                 case 2:
-                    level = 3;
-                    DisplayText.Text = Sentences.sentence3;
+                    DisplayText.Text = Sentences.sentence2;
                     break;
                 case 3:
-                    level = 4;
-                    DisplayText.Text = Sentences.sentence4;
+                    DisplayText.Text = Sentences.sentence3;
                     break;
                 case 4:
-                    level = 5;
-                    DisplayText.Text = Sentences.sentence5;
+                    DisplayText.Text = Sentences.sentence4;
                     break;
                 case 5:
-                    level = 6;
-                    DisplayText.Text = Sentences.sentence6;
+                    DisplayText.Text = Sentences.sentence5;
                     break;
-                default:
-                    level = 1;
-                    DisplayText.Text = Sentences.sentence1;
+                case 6:
+                    DisplayText.Text = Sentences.sentence6;
                     break;
             }
             // Start the timer
