@@ -10,9 +10,9 @@ namespace TurboTyper
 {
     public partial class MainPage : Page
     {
-        // Create timer and total seconds
+        // Create timer and current time retriever
         private DispatcherTimer Timer;
-        private int seconds;
+        private DateTime currentTime;
         // Create level number storer
         private int level;
         // Create the sentences to be used for each numbered level, with 6 total levels
@@ -41,11 +41,11 @@ namespace TurboTyper
         {
             // Set the emoticon to default face
             EmoteText.Text = "'_'";
-            // Start seconds at 18 to count down
-            seconds = 18;
+            // Set the starting time amount
+            currentTime = DateTime.Now.AddSeconds(18);
             // Construct new DispatcherTimer and set its interval
             Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Interval = TimeSpan.FromMilliseconds(100);
             // Create the timer event and start it
             Timer.Tick += Timer_Tick;
             Timer.Start();
@@ -53,6 +53,8 @@ namespace TurboTyper
 
         private void Timer_Tick(object sender, object e)
         {
+            // Make the timer a countdown timer
+            var elapsedTime = currentTime - DateTime.Now;
             // Checking if the sentence typed is the sentence displayed
             if (InputText.Text == DisplayText.Text)
             {
@@ -64,7 +66,7 @@ namespace TurboTyper
                 level++;
             }
             // Checking the timer and change the emoticon according to the time
-            switch (seconds)
+            switch (Math.Ceiling(elapsedTime.TotalSeconds))
             {
                 // Check if time's up 
                 case 0:
@@ -82,15 +84,15 @@ namespace TurboTyper
                     EmoteText.Text = "-_-";
                     break;
             }
-            // Make the timer a countdown timer and display it in the UI
-            seconds--;
-            TimerText.Text = $"{seconds}";
+            // Display the timer in the UI
+            TimerText.Text = Math.Ceiling(elapsedTime.TotalSeconds).ToString();
         }
 
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
-            // Disable this button until either the full sentence is typed or the timer runs out
+            // Disable this button and fade it until either the full sentence is typed or the timer runs out
             AButton.IsEnabled = false;
+            AButton.Opacity = 0.3;
             // Make other buttons except this one go away
             SButton.IsEnabled = false;
             SButton.Opacity = 0;
