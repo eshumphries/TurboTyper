@@ -15,8 +15,8 @@ namespace TurboTyper
         private DateTime currentTime;
         // Create level number storer
         private int level;
-        // Create a toggle switch for the button used to start the game
-        private bool toggle;
+        // Create toggle switches to let the game store when which buttons are pressed
+        private bool aButtonToggle, sButtonToggle, dButtonToggle;
         // Create the sentences to be used for each numbered level, with 6 total levels
         public string sentence1, sentence2, sentence3, sentence4, sentence5, sentence6;
 
@@ -31,8 +31,10 @@ namespace TurboTyper
             DButton.Click += DButton_Click;
             // Set starting level
             level = 1;
-            // Set the toggle switch
-            toggle = false;
+            // Set the toggle switches
+            aButtonToggle = false;
+            sButtonToggle = false;
+            dButtonToggle = false;
             // Store the sentences to be used in the game
             sentence1 = "Just type this.";
             sentence2 = "How fast can you type?";
@@ -122,7 +124,7 @@ namespace TurboTyper
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
             // Check if it's the first time the play button was clicked with the toggle
-            if (toggle == false)
+            if (aButtonToggle == false)
             {
                 // Disable this button and fade it until either the full sentence is typed or the timer runs out
                 AButton.IsEnabled = false;
@@ -140,7 +142,7 @@ namespace TurboTyper
                 Canvas.SetTop(DisplayText, 60);
             }
             // Now set the toggle to true
-            toggle = true;
+            aButtonToggle = true;
             // Clear the text input box for the next level after completing the previous and focus on it
             InputText.Text = "";
             InputText.Focus();
@@ -185,13 +187,29 @@ namespace TurboTyper
 
         private void DButton_Click(object sender, RoutedEventArgs e)
         {
-            DisplayText.Text = "What option do you want to change?";
-            AButtonText.Text = "Levels";
-            AButtonSymbol.Text = "";
-            SButtonText.Text = "Timer";
-            SButtonSymbol.Text = "¡";
-            DButtonText.Text = "Cancel";
-            DButtonSymbol.Text = "r";
+            switch (dButtonToggle)
+            {
+                case false:
+                    DisplayText.Text = "What option do you want to change?";
+                    AButtonText.Text = "Levels";
+                    AButtonSymbol.Text = "";
+                    SButtonText.Text = "Timer";
+                    SButtonSymbol.Text = "¡";
+                    DButtonText.Text = "Cancel";
+                    DButtonSymbol.Text = "r";
+                    dButtonToggle = true;
+                    break;
+                case true:
+                    DisplayText.Text = "";
+                    AButtonText.Text = "Play";
+                    AButtonSymbol.Text = "4";
+                    SButtonText.Text = "Help";
+                    SButtonSymbol.Text = "s";
+                    DButtonText.Text = "Options";
+                    DButtonSymbol.Text = "¼";
+                    dButtonToggle = false;
+                    break;
+            }
         }
 
         private void DisplayScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
