@@ -33,6 +33,13 @@ namespace TurboTyper
             level = 1;
             // Set the toggle switch
             toggle = false;
+            // Store the sentences to be used in the game
+            sentence1 = "Just type this.";
+            sentence2 = "How fast can you type?";
+            sentence3 = "Excellent job so far, but it gets\ntrickier!";
+            sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
+            sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
+            sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
         }
 
         private void StartTimer()
@@ -131,13 +138,6 @@ namespace TurboTyper
                 InputText.Opacity = 1;
                 // Move the sentence text down a bit for better spacing below the timer and emoticon
                 Canvas.SetTop(DisplayText, 60);
-                // Store the sentences to be used in the game
-                sentence1 = "Just type this.";
-                sentence2 = "How fast can you type?";
-                sentence3 = "Excellent job so far, but it gets\ntrickier!";
-                sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
-                sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
-                sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
             }
             // Now set the toggle to true
             toggle = true;
@@ -185,7 +185,13 @@ namespace TurboTyper
 
         private void DButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            DisplayText.Text = "What option do you want to change?";
+            AButtonText.Text = "Levels";
+            AButtonSymbol.Text = "";
+            SButtonText.Text = "Timer";
+            SButtonSymbol.Text = "¡";
+            DButtonText.Text = "Cancel";
+            DButtonSymbol.Text = "r";
         }
 
         private void DisplayScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
