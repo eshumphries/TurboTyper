@@ -15,16 +15,10 @@ namespace TurboTyper
         private DateTime currentTime;
         // Create level number storer
         private int level;
+        // Create a toggle switch for the button used to start the game
+        private bool toggle;
         // Create the sentences to be used for each numbered level, with 6 total levels
-        public class SentenceStorer
-        {
-            public string sentence1 { get; set; }
-            public string sentence2 { get; set; }
-            public string sentence3 { get; set; }
-            public string sentence4 { get; set; }
-            public string sentence5 { get; set; }
-            public string sentence6 { get; set; }
-        }
+        public string sentence1, sentence2, sentence3, sentence4, sentence5, sentence6;
 
         public MainPage()
         {
@@ -37,6 +31,8 @@ namespace TurboTyper
             DButton.Click += DButton_Click;
             // Set starting level
             level = 1;
+            // Set the toggle switch
+            toggle = false;
         }
 
         private void StartTimer()
@@ -90,7 +86,7 @@ namespace TurboTyper
                     AButton.Opacity = 1;
                     AButton.Focus();
                     // Reset the level to start over from the beginning
-                    level = 0;
+                    level = 1;
                     break;
                 case 5:
                     // Change the emoticon to crying face
@@ -107,57 +103,62 @@ namespace TurboTyper
 
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
-            // Disable this button and fade it until either the full sentence is typed or the timer runs out
-            AButton.IsEnabled = false;
-            AButton.Opacity = 0.3;
-            // Make other buttons except this one go away
-            SButton.IsEnabled = false;
-            SButton.Opacity = 0;
-            DButton.IsEnabled = false;
-            DButton.Opacity = 0;
-            // Display the timer, emoticon face, and input text box
-            EmoteText.Opacity = 1;
-            TimerText.Opacity = 1;
-            InputText.Opacity = 1;
+            // Check if it's the first time the play button was clicked with the toggle
+            if (toggle == false)
+            {
+                // Disable this button and fade it until either the full sentence is typed or the timer runs out
+                AButton.IsEnabled = false;
+                AButton.Opacity = 0.3;
+                // Make other buttons except this one go away
+                SButton.IsEnabled = false;
+                SButton.Opacity = 0;
+                DButton.IsEnabled = false;
+                DButton.Opacity = 0;
+                // Display the timer, emoticon face, and input text box
+                EmoteText.Opacity = 1;
+                TimerText.Opacity = 1;
+                InputText.Opacity = 1;
+                // Move the sentence text down a bit for better spacing below the timer and emoticon
+                Canvas.SetTop(DisplayText, 60);
+                // Store the sentences to be used in the game
+                sentence1 = "Just type this.";
+                sentence2 = "How fast can you type?";
+                sentence3 = "Excellent job so far, but it gets\ntrickier!";
+                sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
+                sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
+                sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
+            }
+            // Now set the toggle to true
+            toggle = true;
             // Clear the text input box for the next level after completing the previous and focus on it
             InputText.Text = "";
             InputText.Focus();
-            // Move the sentence text down a bit for better spacing below the timer and emoticon
-            Canvas.SetTop(DisplayText, 60);
-            // Store the sentences to be used in the game
-            SentenceStorer Sentences = new SentenceStorer();
-            Sentences.sentence1 = "Just type this.";
-            Sentences.sentence2 = "How fast can you type?";
-            Sentences.sentence3 = "Excellent job so far, but it gets\ntrickier!";
-            Sentences.sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
-            Sentences.sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
-            Sentences.sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
             // Set level based on current level
             switch (level)
             {
                 case 1:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence1;
+                    DisplayText.Text = sentence1;
                     break;
                 case 2:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence2;
+                    DisplayText.Text = sentence2;
                     break;
                 case 3:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence3;
+                    DisplayText.Text = sentence3;
                     break;
                 case 4:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence4;
+                    DisplayText.Text = sentence4;
                     break;
                 case 5:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence5;
+                    DisplayText.Text = sentence5;
                     break;
                 case 6:
                     DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = Sentences.sentence6;
+                    DisplayText.Text = sentence6;
                     break;
             }
             // Start the timer
