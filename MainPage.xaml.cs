@@ -57,8 +57,12 @@ namespace TurboTyper
         {
             // Make the timer a countdown timer
             var elapsedTime = currentTime - DateTime.Now;
+            // Remove the line breaks from the displayed sentence text and store this string in a variable
+            string displayString = DisplayText.Text.Replace("\r", " ").Replace("\n", " ");
+            // Store the player input in a variable
+            string inputString = InputText.Text;
             // Checking if the sentence typed is the sentence displayed
-            if (InputText.Text == DisplayText.Text)
+            if (inputString == displayString)
             {
                 // Display a congratulation message and emoticon face and stop the timer
                 EmoteText.Text = "^_^";
@@ -132,21 +136,27 @@ namespace TurboTyper
             switch (level)
             {
                 case 1:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence1;
                     break;
                 case 2:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence2;
                     break;
                 case 3:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence3;
                     break;
                 case 4:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence4;
                     break;
                 case 5:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence5;
                     break;
                 case 6:
+                    DisplayText.Text.Replace("\n", Environment.NewLine);
                     DisplayText.Text = Sentences.sentence6;
                     break;
             }
