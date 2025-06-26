@@ -60,16 +60,27 @@ namespace TurboTyper
             // Checking if the sentence typed is the sentence displayed
             if (inputString == displayString)
             {
-                // Display a congratulation message and emoticon face and stop the timer
-                EmoteText.Text = "^_^";
-                DisplayText.Text = "Good job!";
+                // Check if it's the 6th level
+                if (level == 6)
+                {
+                    // Display a game win message and emoticon, then reset the level
+                    EmoteText.Text = "*o*";
+                    DisplayText.Text = "Congratulations! You win! Try again?";
+                    level = 1;
+                }
+                else
+                {
+                    // For other levels just have a default win emoticon and message, and then increase level number
+                    EmoteText.Text = "^_^";
+                    DisplayText.Text = "Good job!";
+                    level++;
+                }
+                // Stop the timer
                 Timer.Stop();
                 // Enable the AButton, make it fully opaque, and give it focus
                 AButton.IsEnabled = true;
                 AButton.Opacity = 1;
                 AButton.Focus();
-                // Increase level number
-                level++;
             }
             // Checking the timer and change the emoticon according to the time
             switch (Math.Ceiling(elapsedTime.TotalSeconds))
