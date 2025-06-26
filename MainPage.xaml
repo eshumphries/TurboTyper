@@ -23,7 +23,7 @@
             <Canvas x:Name="DisplayCanvas" Width="150" Height="150" Grid.Row="1">
                 <!--Emoticon, timer, sentence text, and typing box in that order-->
                 <TextBlock x:Name="EmoteText" Text="'_'" FontSize="15" FontFamily="Courier New" FontWeight="Bold" Canvas.Left="60" Canvas.Top="21" Opacity="0"/>
-                <TextBlock x:Name="TimerText" Text="18" FontSize="15" Canvas.Left="63" Canvas.Top="45" Opacity="0"/>
+                <TextBlock x:Name="TimerText" Text="12" FontSize="15" Canvas.Left="63" Canvas.Top="45" Opacity="0"/>
                 <TextBlock x:Name="DisplayText" Canvas.Left="-24" Canvas.Top="60"/>
                 <TextBox x:Name="InputText" Width="210" Canvas.Left="-27" Canvas.Top="120" Opacity="0"/>
             </Canvas>
