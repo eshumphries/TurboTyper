@@ -199,7 +199,8 @@ namespace TurboTyper
             // Edit the sentence to be used in the level
             else if (aButtonState == 1 && dButtonState == 1)
             {
-
+                DisplayText.Text = "Saved!";
+                sentenceList[level] = InputText.Text;
             }
         }
 
