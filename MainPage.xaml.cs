@@ -13,10 +13,8 @@ namespace TurboTyper
         // Create timer and current time retriever
         private DispatcherTimer Timer;
         private DateTime currentTime;
-        // Create level number storer
-        private int level;
-        // Create toggle switches to let the game store when which buttons are pressed
-        private bool aButtonToggle, sButtonToggle, dButtonToggle;
+        // Create level number storer and button UI state storer
+        private int level, aButtonState, sButtonState, dButtonState;
         // Create the sentences to be used for each numbered level, with 6 total levels
         public string sentence1, sentence2, sentence3, sentence4, sentence5, sentence6;
 
@@ -31,10 +29,10 @@ namespace TurboTyper
             DButton.Click += DButton_Click;
             // Set starting level
             level = 1;
-            // Set the toggle switches
-            aButtonToggle = false;
-            sButtonToggle = false;
-            dButtonToggle = false;
+            // Set the button states 
+            aButtonState = 0;
+            sButtonState = 0;
+            dButtonState = 0;
             // Store the sentences to be used in the game
             sentence1 = "Just type this.";
             sentence2 = "How fast can you type?";
@@ -90,6 +88,8 @@ namespace TurboTyper
                 AButton.IsEnabled = true;
                 AButton.Opacity = 1;
                 AButton.Focus();
+                // Reset the button state
+                aButtonState = 0;
             }
             // Checking the timer and change the emoticon according to the time
             switch (Math.Ceiling(elapsedTime.TotalSeconds))
@@ -123,8 +123,8 @@ namespace TurboTyper
 
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
-            // Check if it's the first time the play button was clicked with the toggle
-            if (aButtonToggle == false)
+            // Check if it's the first time the play button was clicked without clicking the options button
+            if (aButtonState == 0 && dButtonState == 0)
             {
                 // Disable this button and fade it until either the full sentence is typed or the timer runs out
                 AButton.IsEnabled = false;
@@ -140,12 +140,36 @@ namespace TurboTyper
                 InputText.Opacity = 1;
                 // Move the sentence text down a bit for better spacing below the timer and emoticon
                 Canvas.SetTop(DisplayText, 60);
+                // Clear the text input box for the next level after completing the previous and focus on it
+                InputText.Text = "";
+                InputText.Focus();
             }
-            // Now set the toggle to true
-            aButtonToggle = true;
-            // Clear the text input box for the next level after completing the previous and focus on it
-            InputText.Text = "";
-            InputText.Focus();
+            // Show different buttons when the options button is clicked
+            else if (aButtonState == 0 && dButtonState == 1)
+            {
+                // Change all the buttons to increase and decrease level number choice and to accept level number
+                AButtonText.Text = "Accept";
+                AButtonSymbol.Text = "a";
+                SButtonText.Text = "Increase";
+                SButtonSymbol.Text = "3";
+                DButtonText.Text = "Decrease";
+                DButtonSymbol.Text = "4";
+                // Show the current level number and the level's sentence to edit in the input text box
+                DisplayText.Text = level.ToString();
+                InputText.Text = sentence1;
+                // Set this button's UI state to a deeper UI state
+                aButtonState = 1;
+            }
+            // Edit the sentence to be used in the level
+            else if (aButtonState == 1 && dButtonState == 1)
+            {
+
+            }
+            // This selects the level
+            else if (aButtonState == 2 && dButtonState == 1)
+            {
+
+            }
             // Set level based on current level
             switch (level)
             {
@@ -180,16 +204,25 @@ namespace TurboTyper
 
         private void SButton_Click(object sender, RoutedEventArgs e)
         {
-            // Move the sentence text up a bit so it looks better and have a help description to show how to play 
-            Canvas.SetTop(DisplayText, 30);
-            DisplayText.Text = "Just type the sentences that appear on the\nscreen in the textbox.  Type fast, because\nthere's a time limit.  Type the sentences on\ntime to go to the next level.  The next level\nwill increase in difficulty.  Finish all 6 levels to\nwin the game.";
+            if (dButtonState == 0)
+            {
+                // Move the sentence text up a bit so it looks better and have a help description to show how to play 
+                Canvas.SetTop(DisplayText, 30);
+                DisplayText.Text = "Just type the sentences that appear on the\nscreen in the textbox.  Type fast, because\nthere's a time limit.  Type the sentences on\ntime to go to the next level.  The next level\nwill increase in difficulty.  Finish all 6 levels to\nwin the game.";
+            }
+            else if (dButtonState == 0)
+            {
+
+            }
         }
 
         private void DButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (dButtonToggle)
+            // Have the buttons change when player clicks the Options button
+            switch (dButtonState)
             {
-                case false:
+                // Show the selectable options through the button changes
+                case 0:
                     DisplayText.Text = "What option do you want to change?";
                     AButtonText.Text = "Levels";
                     AButtonSymbol.Text = "";
@@ -197,9 +230,10 @@ namespace TurboTyper
                     SButtonSymbol.Text = "¡";
                     DButtonText.Text = "Cancel";
                     DButtonSymbol.Text = "r";
-                    dButtonToggle = true;
+                    dButtonState = 1;
                     break;
-                case true:
+                // Change it back
+                case 1:
                     DisplayText.Text = "";
                     AButtonText.Text = "Play";
                     AButtonSymbol.Text = "4";
@@ -207,7 +241,7 @@ namespace TurboTyper
                     SButtonSymbol.Text = "s";
                     DButtonText.Text = "Options";
                     DButtonSymbol.Text = "¼";
-                    dButtonToggle = false;
+                    dButtonState = 0;
                     break;
             }
         }
