@@ -239,12 +239,16 @@ namespace TurboTyper
                 // Set the state of the middle button
                 sButtonState = 1;
             }
+            // This will cycle through all the sentences for each level for the player to edit
             else if (aButtonState == 1 && dButtonState == 1)
             {
+                // Don't go over 6 levels because that's the level amount
                 if (level < 6)
                     level++;
                 else
+                    // Go back to level 1 after 6
                     level = 1;
+                // Show the level number and its sentence(s)
                 DisplayText.Text = "Level: " + level;
                 InputText.Text = sentenceList[level - 1];
             }
@@ -253,30 +257,34 @@ namespace TurboTyper
         private void DButton_Click(object sender, RoutedEventArgs e)
         {
             // Have the buttons change when player clicks the right button
-            switch (dButtonState)
+            if (aButtonState == 0 && sButtonState == 0 && dButtonState == 0)
             {
                 // Show the selectable options through the button changes
-                case 0:
-                    DisplayText.Text = "What option do you want to change?";
-                    AButtonText.Text = "Levels";
-                    AButtonSymbol.Text = "";
-                    SButtonText.Text = "Timer";
-                    SButtonSymbol.Text = "¡";
-                    DButtonText.Text = "Cancel";
-                    DButtonSymbol.Text = "r";
-                    dButtonState = 1;
-                    break;
-                // Change it back
-                case 1:
-                    DisplayText.Text = "";
-                    AButtonText.Text = "Play";
-                    AButtonSymbol.Text = "4";
-                    SButtonText.Text = "Help";
-                    SButtonSymbol.Text = "s";
-                    DButtonText.Text = "Options";
-                    DButtonSymbol.Text = "¼";
-                    dButtonState = 0;
-                    break;
+                DisplayText.Text = "What option do you want to change?";
+                AButtonText.Text = "Levels";
+                AButtonSymbol.Text = "";
+                SButtonText.Text = "Timer";
+                SButtonSymbol.Text = "¡";
+                DButtonText.Text = "Cancel";
+                DButtonSymbol.Text = "r";
+                dButtonState = 1;
+            }
+            // Change it back
+            else if ((aButtonState == 0 && sButtonState == 0 && dButtonState == 1) || (aButtonState == 0 && sButtonState == 1 && dButtonState == 1) || (aButtonState == 1 && sButtonState == 0 && dButtonState == 1))
+            {
+                DisplayText.Text = "";
+                InputText.IsEnabled = false;
+                InputText.Opacity = 0;
+                AButtonText.Text = "Play";
+                AButtonSymbol.Text = "4";
+                SButtonText.Text = "Help";
+                SButtonSymbol.Text = "s";
+                DButtonText.Text = "Options";
+                DButtonSymbol.Text = "¼";
+                aButtonState = 0;
+                sButtonState = 0;
+                dButtonState = 0;
+                level = 1;
             }
         }
 
