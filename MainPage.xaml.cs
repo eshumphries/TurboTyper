@@ -110,6 +110,11 @@ namespace TurboTyper
                     AButton.IsEnabled = true;
                     AButton.Opacity = 1;
                     AButton.Focus();
+                    // Bring the right button back in case the player wants to change options
+                    DButton.IsEnabled = true;
+                    DButton.Opacity = 1;
+                    DButtonText.Text = "Cancel";
+                    DButtonSymbol.Text = "r";
                     // Reset the level to start over from the beginning
                     level = 1;
                     break;
@@ -180,6 +185,8 @@ namespace TurboTyper
                 InputText.Focus();
                 // Start the timer
                 StartTimer();
+                // Show that the left button was clicked once
+                aButtonState = 1;
             }
             // Show different buttons when the right button is clicked
             else if (aButtonState == 0 && sButtonState == 0 && dButtonState == 1)
@@ -272,8 +279,10 @@ namespace TurboTyper
                 dButtonState = 1;
             }
             // Change it back
-            else if ((aButtonState == 0 && sButtonState == 0 && dButtonState == 1) || (aButtonState == 0 && sButtonState == 1 && dButtonState == 1) || (aButtonState == 1 && sButtonState == 0 && dButtonState == 1))
+            else if ((aButtonState == 0 && sButtonState == 0 && dButtonState == 1) || (aButtonState == 0 && sButtonState == 1 && dButtonState == 1) || (aButtonState == 1 && sButtonState == 0 && dButtonState == 1) || (aButtonState == 1 && sButtonState == 0 && dButtonState == 0))
             {
+                EmoteText.Text = "";
+                TimerText.Text = "";
                 DisplayText.Text = "";
                 InputText.IsEnabled = false;
                 InputText.Opacity = 0;
