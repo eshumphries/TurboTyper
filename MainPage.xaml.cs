@@ -194,7 +194,7 @@ namespace TurboTyper
                 DisplayText.Text = "Level: " + level.ToString();
                 InputText.IsEnabled = true;
                 InputText.Opacity = 1;
-                InputText.Text = sentenceList[level];
+                InputText.Text = sentenceList[level - 1];
                 // Set this button's UI state to a deeper UI state
                 aButtonState = 1;
             }
@@ -202,12 +202,12 @@ namespace TurboTyper
             else if (aButtonState == 1 && sButtonState == 0 && dButtonState == 1)
             {
                 DisplayText.Text = "Saved!";
-                sentenceList[level] = InputText.Text;
+                sentenceList[level - 1] = InputText.Text;
             }
             else if (aButtonState == 0 && sButtonState == 1 && dButtonState == 1)
             {
                 DisplayText.Text = "Saved!";
-                int.TryParse(currentTime.ToString(), out seconds);
+                seconds = Convert.ToInt32(InputText.Text);
                 currentTime = DateTime.Now.AddSeconds(seconds);
             }
         }
@@ -238,6 +238,15 @@ namespace TurboTyper
                 SButton.Opacity = 0;
                 // Set the state of the middle button
                 sButtonState = 1;
+            }
+            else if (aButtonState == 1 && dButtonState == 1)
+            {
+                if (level < 6)
+                    level++;
+                else
+                    level = 1;
+                DisplayText.Text = "Level: " + level;
+                InputText.Text = sentenceList[level - 1];
             }
         }
 
