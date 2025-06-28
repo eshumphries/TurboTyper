@@ -15,8 +15,6 @@ namespace TurboTyper
         DateTime currentTime;
         // Create level number storer, amount of timer seconds, and button UI state storer
         int level, seconds, aButtonState, sButtonState, dButtonState;
-        // Create the sentences to be used for each numbered level, with 6 total levels
-        string sentence1, sentence2, sentence3, sentence4, sentence5, sentence6;
         // Create a list to store the sentences to reference by level number
         List<string> sentenceList;
 
@@ -43,20 +41,21 @@ namespace TurboTyper
             sButtonState = 0;
             dButtonState = 0;
             // Store the sentences to be used in the game
-            sentence1 = "Just type this.";
-            sentence2 = "How fast can you type?";
-            sentence3 = "Excellent job so far, but it gets\ntrickier!";
-            sentence4 = "You've passed Level 1, 2, and 3.\nVery good.";
-            sentence5 = "The 6th and final level's coming\nup! Are you sure you're ready?";
-            sentence6 = "You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?";
-            // Store the sentences to be used in the list
-            sentenceList = new List<string> { sentence1, sentence2, sentence3, sentence4, sentence5, sentence6 };
+            sentenceList = new List<string> { };
+            sentenceList.Add("Just type this.");
+            sentenceList.Add("How fast can you type?");
+            sentenceList.Add("Excellent job so far, but it gets\ntrickier!");
+            sentenceList.Add("You've passed Level 1, 2, and 3.\nVery good.");
+            sentenceList.Add("The 6th and final level's coming\nup! Are you sure you're ready?");
+            sentenceList.Add("You asked for it! This level's\ndifficulty is crazier, harder, and\nlonger than the others. Is it beatable?");
         }
 
         private void StartTimer()
         {
             // Set the emoticon to default face
             EmoteText.Text = "'_'";
+            // Set total seconds for the timer each time the timer starts or restarts
+            currentTime = DateTime.Now.AddSeconds(seconds);
             // Create the timer event and start it
             Timer.Tick += Timer_Tick;
             Timer.Start();
@@ -129,37 +128,37 @@ namespace TurboTyper
 
         private void AButton_Click(object sender, RoutedEventArgs e)
         {
-            // Set the correct sentence for the correct level and fix the line break problem
-            switch (level)
-            {
-                case 1:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence1;
-                    break;
-                case 2:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence2;
-                    break;
-                case 3:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence3;
-                    break;
-                case 4:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence4;
-                    break;
-                case 5:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence5;
-                    break;
-                case 6:
-                    DisplayText.Text.Replace("\n", Environment.NewLine);
-                    DisplayText.Text = sentence6;
-                    break;
-            }
             // Check if it's the first time the left button was clicked without clicking the right button
             if (aButtonState == 0 && sButtonState == 0 && dButtonState == 0)
             {
+                // Set the correct sentence for the correct level and fix the line break problem
+                switch (level)
+                {
+                    case 1:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[0];
+                        break;
+                    case 2:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[1];
+                        break;
+                    case 3:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[2];
+                        break;
+                    case 4:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[3];
+                        break;
+                    case 5:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[4];
+                        break;
+                    case 6:
+                        DisplayText.Text.Replace("\n", Environment.NewLine);
+                        DisplayText.Text = sentenceList[5];
+                        break;
+                }
                 // Disable this button and make it disappear until either the full sentence is typed or the timer runs out
                 AButton.IsEnabled = false;
                 AButton.Opacity = 0;
@@ -174,9 +173,8 @@ namespace TurboTyper
                 InputText.Opacity = 1;
                 // Move the sentence text down a bit for better spacing below the timer and emoticon
                 Canvas.SetTop(DisplayText, 60);
-                // Make the text input box appear
+                // Make the text input box usable
                 InputText.IsEnabled = true;
-                InputText.Opacity = 1;
                 // Clear the text input box for each level and focus on it
                 InputText.Text = "";
                 InputText.Focus();
@@ -207,6 +205,7 @@ namespace TurboTyper
                 DisplayText.Text = "Saved!";
                 sentenceList[level - 1] = InputText.Text;
             }
+            // Edit the timer amount in seconds
             else if (aButtonState == 0 && sButtonState == 1 && dButtonState == 1)
             {
                 DisplayText.Text = "Saved!";
