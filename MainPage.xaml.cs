@@ -13,8 +13,8 @@ namespace TurboTyper
         // Create timer and current time retriever
         DispatcherTimer Timer;
         DateTime currentTime;
-        // Create level number storer and button UI state storer
-        int level, aButtonState, sButtonState, dButtonState;
+        // Create level number storer, amount of timer seconds, and button UI state storer
+        int level, seconds, aButtonState, sButtonState, dButtonState;
         // Create the sentences to be used for each numbered level, with 6 total levels
         string sentence1, sentence2, sentence3, sentence4, sentence5, sentence6;
         // Create a list to store the sentences to reference by level number
@@ -29,6 +29,13 @@ namespace TurboTyper
             AButton.Click += AButton_Click;
             SButton.Click += SButton_Click;
             DButton.Click += DButton_Click;
+            // Construct new DispatcherTimer and set its interval
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromMilliseconds(100);
+            // Make the amount of seconds total
+            seconds = 18;
+            // Set the starting time amount
+            currentTime = DateTime.Now.AddSeconds(seconds);
             // Set starting level
             level = 1;
             // Set the button states 
@@ -50,11 +57,6 @@ namespace TurboTyper
         {
             // Set the emoticon to default face
             EmoteText.Text = "'_'";
-            // Set the starting time amount
-            currentTime = DateTime.Now.AddSeconds(18);
-            // Construct new DispatcherTimer and set its interval
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromMilliseconds(100);
             // Create the timer event and start it
             Timer.Tick += Timer_Tick;
             Timer.Start();
@@ -88,7 +90,7 @@ namespace TurboTyper
                 }
                 // Stop the timer
                 Timer.Stop();
-                // Enable the AButton, make it fully opaque, and give it focus
+                // Enable the left button, make it fully opaque, and give it focus
                 AButton.IsEnabled = true;
                 AButton.Opacity = 1;
                 AButton.Focus();
@@ -105,7 +107,7 @@ namespace TurboTyper
                     DisplayText.Text = "Game over! Try again?";
                     // Stop the timer
                     Timer.Stop();
-                    // Enable the AButton, make it opaque again, and focus on it
+                    // Enable the left button, make it opaque again, and focus on it
                     AButton.IsEnabled = true;
                     AButton.Opacity = 1;
                     AButton.Focus();
@@ -155,12 +157,12 @@ namespace TurboTyper
                     DisplayText.Text = sentence6;
                     break;
             }
-            // Check if it's the first time the play button was clicked without clicking the options button
-            if (aButtonState == 0 && dButtonState == 0)
+            // Check if it's the first time the left button was clicked without clicking the right button
+            if (aButtonState == 0 && sButtonState == 0 && dButtonState == 0)
             {
-                // Disable this button and fade it until either the full sentence is typed or the timer runs out
+                // Disable this button and make it disappear until either the full sentence is typed or the timer runs out
                 AButton.IsEnabled = false;
-                AButton.Opacity = 0.3;
+                AButton.Opacity = 0;
                 // Make other buttons except this one go away
                 SButton.IsEnabled = false;
                 SButton.Opacity = 0;
@@ -178,16 +180,16 @@ namespace TurboTyper
                 // Start the timer
                 StartTimer();
             }
-            // Show different buttons when the options button is clicked
-            else if (aButtonState == 0 && dButtonState == 1)
+            // Show different buttons when the right button is clicked
+            else if (aButtonState == 0 && sButtonState == 0 && dButtonState == 1)
             {
                 // Change all the buttons to increase and decrease level number choice and to accept level number
                 AButtonText.Text = "Accept";
                 AButtonSymbol.Text = "a";
                 SButtonText.Text = "Next";
-                SButtonSymbol.Text = "3";
-                DButtonText.Text = "Previous";
-                DButtonSymbol.Text = "4";
+                SButtonSymbol.Text = "4";
+                DButtonText.Text = "Cancel";
+                DButtonSymbol.Text = "r";
                 // Show the current level number and the level's sentence to edit in the input text box
                 DisplayText.Text = "Level: " + level.ToString();
                 InputText.IsEnabled = true;
@@ -197,30 +199,51 @@ namespace TurboTyper
                 aButtonState = 1;
             }
             // Edit the sentence to be used in the level
-            else if (aButtonState == 1 && dButtonState == 1)
+            else if (aButtonState == 1 && sButtonState == 0 && dButtonState == 1)
             {
                 DisplayText.Text = "Saved!";
                 sentenceList[level] = InputText.Text;
+            }
+            else if (aButtonState == 0 && sButtonState == 1 && dButtonState == 1)
+            {
+                DisplayText.Text = "Saved!";
+                int.TryParse(currentTime.ToString(), out seconds);
+                currentTime = DateTime.Now.AddSeconds(seconds);
             }
         }
 
         private void SButton_Click(object sender, RoutedEventArgs e)
         {
+            // What happens when the middle button or right button weren't clicked before
             if (aButtonState == 0 && dButtonState == 0)
             {
                 // Move the sentence text up a bit so it looks better and have a help description to show how to play 
                 Canvas.SetTop(DisplayText, 30);
                 DisplayText.Text = "Just type the sentences that appear on the\nscreen in the textbox.  Type fast, because\nthere's a time limit.  Type the sentences on\ntime to go to the next level.  The next level\nwill increase in difficulty.  Finish all 6 levels to\nwin the game.";
             }
+            // When the right button was clicked first
             else if (aButtonState == 0 && dButtonState == 1)
             {
-
+                DisplayText.Text = "Timer: " + seconds;
+                InputText.IsEnabled = true;
+                InputText.Opacity = 1;
+                InputText.Text = seconds.ToString();
+                // Change all the buttons to accept timer amount
+                AButtonText.Text = "Accept";
+                AButtonSymbol.Text = "a";
+                DButtonText.Text = "Cancel";
+                DButtonSymbol.Text = "r";
+                // Get rid of the middle button for now
+                SButton.IsEnabled = false;
+                SButton.Opacity = 0;
+                // Set the state of the middle button
+                sButtonState = 1;
             }
         }
 
         private void DButton_Click(object sender, RoutedEventArgs e)
         {
-            // Have the buttons change when player clicks the Options button
+            // Have the buttons change when player clicks the right button
             switch (dButtonState)
             {
                 // Show the selectable options through the button changes
