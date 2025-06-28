@@ -174,7 +174,10 @@ namespace TurboTyper
                 InputText.Opacity = 1;
                 // Move the sentence text down a bit for better spacing below the timer and emoticon
                 Canvas.SetTop(DisplayText, 60);
-                // Clear the text input box for the next level after completing the previous and focus on it
+                // Make the text input box appear
+                InputText.IsEnabled = true;
+                InputText.Opacity = 1;
+                // Clear the text input box for each level and focus on it
                 InputText.Text = "";
                 InputText.Focus();
                 // Start the timer
@@ -215,14 +218,14 @@ namespace TurboTyper
         private void SButton_Click(object sender, RoutedEventArgs e)
         {
             // What happens when the middle button or right button weren't clicked before
-            if (aButtonState == 0 && dButtonState == 0)
+            if (aButtonState == 0 && sButtonState == 0 && dButtonState == 0)
             {
                 // Move the sentence text up a bit so it looks better and have a help description to show how to play 
                 Canvas.SetTop(DisplayText, 30);
                 DisplayText.Text = "Just type the sentences that appear on the\nscreen in the textbox.  Type fast, because\nthere's a time limit.  Type the sentences on\ntime to go to the next level.  The next level\nwill increase in difficulty.  Finish all 6 levels to\nwin the game.";
             }
             // When the right button was clicked first
-            else if (aButtonState == 0 && dButtonState == 1)
+            else if (aButtonState == 0 && sButtonState == 0 && dButtonState == 1)
             {
                 DisplayText.Text = "Timer: " + seconds;
                 InputText.IsEnabled = true;
@@ -240,7 +243,7 @@ namespace TurboTyper
                 sButtonState = 1;
             }
             // This will cycle through all the sentences for each level for the player to edit
-            else if (aButtonState == 1 && dButtonState == 1)
+            else if (aButtonState == 1 && sButtonState == 0 && dButtonState == 1)
             {
                 // Don't go over 6 levels because that's the level amount
                 if (level < 6)
