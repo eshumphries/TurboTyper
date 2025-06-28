@@ -277,6 +277,8 @@ namespace TurboTyper
                 InputText.Opacity = 0;
                 AButtonText.Text = "Play";
                 AButtonSymbol.Text = "4";
+                SButton.IsEnabled = true;
+                SButton.Opacity = 1;
                 SButtonText.Text = "Help";
                 SButtonSymbol.Text = "s";
                 DButtonText.Text = "Options";
